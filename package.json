@@ -1,0 +1,45 @@
+{
+  "name": "myeduride-gate-manager",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed:super-admins": "node scripts/seed-super-admins.js",
+    "seed:super-admins:inspect": "node scripts/seed-super-admins.js --inspect-only"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "@supabase/ssr": "^0.3.0",
+    "@supabase/supabase-js": "^2.43.0",
+    "date-fns": "^3.6.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "jsqr": "^1.4.0",
+    "lucide-react": "^0.378.0",
+    "next": "^14.2.0",
+    "qrcode": "^1.5.3",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "resend": "^3.2.0",
+    "sonner": "^1.4.0",
+    "recharts": "^2.12.0",
+    "tailwindcss": "^3.4.0",
+    "web-push": "^3.6.0",
+    "zustand": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.0",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/web-push": "^3.6.3",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.0",
+    "postcss": "^8.4.0",
+    "typescript": "^5.4.0"
+  }
+}
