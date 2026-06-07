@@ -1,5 +1,11 @@
 export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic';
 
+// Add NextRequest inside this import statement:
+import { NextRequest, NextResponse } from 'next/server'; 
+import webpush from 'web-push';
+
+// ... your existing webpush configurations and logic
 import webpush from 'web-push';
 
 const publicKey = process.env.VAPID_PUBLIC_KEY;
