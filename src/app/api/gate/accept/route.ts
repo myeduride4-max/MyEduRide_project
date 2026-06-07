@@ -7,7 +7,7 @@ const publicKey = process.env.VAPID_PUBLIC_KEY;
 const privateKey = process.env.VAPID_PRIVATE_KEY;
 
 // Only initialize if the key exists AND looks valid
-if (publicKey && privateKey && publicKey.length > 50) {
+if (publicKey && privateKey && publicKey.length > 50) { 
   try {
     webpush.setVapidDetails(
       'mailto:myeduride4@gmail.com',
