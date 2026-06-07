@@ -1,23 +1,24 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getAdminClient } from '@/lib/supabase/admin';
-import { getSessionFromRequest, sessionHasRole } from '@/lib/session';
-import { canAccessGateOperations } from '@/lib/gate/access';
-import { fetchStudentPickupContext } from '@/lib/gate/student-pickup-context';
-import { notifyParentsOfAttendance } from '@/lib/notifications/parent-notify';
-import {
-  isLateAtTimestamp,
-  isLateByThreshold,
-  minutesAfterThreshold,
-  minutesLateAtTimestamp,
-  nowUtcIso,
-  todayInLagos,
-} from '@/lib/timezone';
-import {
-  getStudentTodayStatus,
-  getStaffTodayStatus,
-  validateStudentGateAction,
-  validateStaffGateAction,
-} from '@/lib/gate/daily-limits';
+export const dynamic = 'force-dynamic';
+
+import webpush from 'web-push';
+
+const publicKey = process.env.VAPID_PUBLIC_KEY;
+const privateKey = process.env.VAPID_PRIVATE_KEY;
+
+// Only initialize if the key exists AND looks valid (approx 87 chars)
+if (publicKey && privateKey && publicKey.length > 50) {
+  try {
+    webpush.setVapidDetails(
+      'mailto:admin@myeduride.com',
+      publicKey,
+      privateKey
+    );
+  } catch (e) {
+    console.error("VAPID Setup skipped during build");
+  }
+}
+
+// ... the rest of your GET/POST functions
 import { assertGateDayOpen } from '@/lib/gate/school-day-gate';
 import { writeAuditLog } from '@/lib/audit/log';
 import { writeGateActivityLog } from '@/lib/gate/activity-log';
