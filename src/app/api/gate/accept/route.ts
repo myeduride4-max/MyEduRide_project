@@ -1,21 +1,16 @@
 export const dynamic = 'force-dynamic';
-export const dynamic = 'force-dynamic';
 
-// Add NextRequest inside this import statement:
 import { NextRequest, NextResponse } from 'next/server'; 
-import webpush from 'web-push';
-
-// ... your existing webpush configurations and logic
 import webpush from 'web-push';
 
 const publicKey = process.env.VAPID_PUBLIC_KEY;
 const privateKey = process.env.VAPID_PRIVATE_KEY;
 
-// Only initialize if the key exists AND looks valid (approx 87 chars)
+// Only initialize if the key exists AND looks valid
 if (publicKey && privateKey && publicKey.length > 50) {
   try {
     webpush.setVapidDetails(
-      'mailto:admin@myeduride.com',
+      'mailto:myeduride4@gmail.com',
       publicKey,
       privateKey
     );
@@ -23,6 +18,8 @@ if (publicKey && privateKey && publicKey.length > 50) {
     console.error("VAPID Setup skipped during build");
   }
 }
+
+// ... rest of your code (POST, GET functions, etc.) below this line
 
 // ... the rest of your GET/POST functions
 import { assertGateDayOpen } from '@/lib/gate/school-day-gate';
