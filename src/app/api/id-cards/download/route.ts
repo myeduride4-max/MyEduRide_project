@@ -9,7 +9,7 @@ import { resolveStaffRoleLabel } from '@/lib/attendance/resolve-staff';
 
 export async function POST(request: NextRequest) {
   try {
-    const session = getSessionFromRequest(request);
+    const session = getSessionFromRequest(request); 
     if (!session) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
