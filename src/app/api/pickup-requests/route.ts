@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
         for (const admin of admins || []) {
           try {
             await resend.emails.send({
-              from: `MyEduRide <noreply@assetid.site>`,
+              from: `MyEduRide <noreply@myeduride.com>`,
               to: admin.email,
               subject: notifTitle,
               html: `<p>${notifMsg}</p><p>School: ${school?.name}</p>`,
