@@ -83,26 +83,31 @@ export async function POST(request: NextRequest) {
         .in('id', staff_role_ids)
         .eq('school_id', school_id);
 
-      for (const r of roles || []) {
-        const profile = await ensureStaffProfile(supabase, school_id, r.user_id);
-        if (!profile?.staff_id_number) continue;
+     for (const r of roles || []) {
+  const profile = await ensureStaffProfile(supabase, school_id, r.user_id);
+  if (!profile?.staff_id_number) continue;
 
-        const photoDataUrl = await loadPhotoDataUrl(supabase, profile.photo_url);
-        const name = (r.profile as { full_name?: string })?.full_name || 'Staff';
-        const roleLabel = await resolveStaffRoleLabel(supabase, school_id, r.user_id);
-        persons.push({
-          kind: 'staff',
-          fullName: name,
-          idNumber: profile.staff_id_number,
-          qrData: profile.qr_code_data || `MYEDURIDE:STAFF:${profile.staff_id_number}`,
-          photoDataUrl,
-          birth: '—',
-          address: school.address || '—',
-          roleLabel,
-        });
-      }
-    }
+  // FIX: If photo_url contains multiple paths or an array text chunk, isolate the primary avatar image
+  let primaryPhotoPath = profile.photo_url;
+  if (typeof primaryPhotoPath === 'string' && primaryPhotoPath.includes(',')) {
+    primaryPhotoPath = primaryPhotoPath.split(',')[0].trim();
+  }
 
+  const photoDataUrl = await loadPhotoDataUrl(supabase, primaryPhotoPath);
+  const name = (r.profile as { full_name?: string })?.full_name || 'Staff';
+  const roleLabel = await resolveStaffRoleLabel(supabase, school_id, r.user_id);
+  
+  persons.push({
+    kind: 'staff',
+    fullName: name,
+    idNumber: profile.staff_id_number,
+    qrData: profile.qr_code_data || `MYEDURIDE:STAFF:${profile.staff_id_number}`,
+    photoDataUrl, // Only downloading ONE image now!
+    birth: '—',
+    address: school.address || '—',
+    roleLabel,
+  });
+}
     if (persons.length === 0) {
       return NextResponse.json({ error: 'No valid cards to generate' }, { status: 400 });
     }
